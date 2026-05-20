@@ -23,6 +23,7 @@ import {
   ChevronDown,
   Users,
   BookOpen,
+  BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UserMenu } from "@/components/layout/user-menu";
@@ -54,6 +55,7 @@ export function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
     { href: "/projects", icon: FolderKanban, label: t("projects") },
     { href: "/ai-chat", icon: MessageSquareCode, label: t("aiChat") },
     { href: "/workspace", icon: Users, label: t("workspace") },
+    { href: "/analytics", icon: BarChart3, label: t("analytics") },
   ];
 
   const aiTools: NavItem[] = [

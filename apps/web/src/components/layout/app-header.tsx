@@ -3,6 +3,7 @@
 import { Menu } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Button } from "@/components/ui/button";
+import { NotificationBell } from "@/components/layout/notification-bell";
 
 interface AppHeaderProps {
   onMenuToggle: () => void;
@@ -22,6 +23,7 @@ export function AppHeader({ onMenuToggle }: AppHeaderProps) {
 
       <div className="flex-1" />
 
+      <NotificationBell />
       <ThemeToggle />
     </header>
   );

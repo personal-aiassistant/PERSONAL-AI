@@ -1,0 +1,176 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id          String   @id @default(uuid())
+  userId      String   @unique @map("user_id")
+  email       String   @unique
+  fullName    String?  @map("full_name")
+  avatarUrl   String?  @map("avatar_url")
+  plan        String   @default("free")
+  tokenUsed   Int      @default(0) @map("token_used")
+  tokenLimit  Int      @default(50000) @map("token_limit")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  projects    Project[]
+  generators  Generator[]
+  chatHistory ChatHistory[]
+  usageLogs   UsageLog[]
+
+  @@map("profiles")
+}
+
+model Workspace {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  ownerId     String   @map("owner_id")
+  plan        String   @default("free")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  members     WorkspaceMember[]
+  projects    Project[]
+  invitations WorkspaceInvitation[]
+  activityLogs ActivityLog[]
+
+  @@map("workspaces")
+}
+
+model WorkspaceMember {
+  id          String   @id @default(uuid())
+  workspaceId String   @map("workspace_id")
+  userId      String   @map("user_id")
+  role        String   @default("member")
+  joinedAt    DateTime @default(now()) @map("joined_at")
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@map("workspace_members")
+}
+
+model WorkspaceInvitation {
+  id          String    @id @default(uuid())
+  workspaceId String    @map("workspace_id")
+  email       String
+  token       String    @unique
+  role        String    @default("member")
+  status      String    @default("pending")
+  expiresAt   DateTime  @map("expires_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("workspace_invitations")
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  workspaceId String   @map("workspace_id")
+  userId      String   @map("user_id")
+  action      String
+  entityType  String?  @map("entity_type")
+  entityId    String?  @map("entity_id")
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@map("activity_logs")
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  workspaceId String?  @map("workspace_id")
+  name        String
+  description String?
+  status      String   @default("active")
+  techStack   String[] @map("tech_stack")
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  profile     Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+  generators  Generator[]
+
+  @@map("projects")
+}
+
+model Generator {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  projectId    String?  @map("project_id")
+  type         String
+  prompt       String
+  output       String
+  tokensUsed   Int      @default(0) @map("tokens_used")
+  model        String   @default("gpt-4o")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  profile      Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  project      Project? @relation(fields: [projectId], references: [id])
+
+  @@map("generators")
+}
+
+model ChatHistory {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  role      String
+  content   String
+  model     String?
+  sessionId String?  @map("session_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  profile   Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("chat_history")
+}
+
+model UsageLog {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  type        String
+  tokensUsed  Int      @default(0) @map("tokens_used")
+  model       String?
+  metadata    Json?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  profile     Profile  @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("usage_logs")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  type      String
+  title     String
+  message   String
+  link      String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId, read])
+  @@map("notifications")
+}
+
+model UserPresence {
+  id        String   @id @default(uuid())
+  userId    String   @unique @map("user_id")
+  lastSeen  DateTime @default(now()) @map("last_seen")
+  isOnline  Boolean  @default(true) @map("is_online")
+  metadata  Json?
+
+  @@map("user_presence")
+}
