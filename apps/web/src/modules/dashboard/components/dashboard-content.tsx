@@ -12,33 +12,39 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuthStore } from "@/store/auth-store";
+import { useDashboardStats } from "@/hooks/use-dashboard-stats";
 
 export function DashboardContent() {
   const t = useTranslations("dashboard");
-  const { user } = useAuthStore();
+  const { user, profile } = useAuthStore();
+  const { data: stats, isLoading: statsLoading } = useDashboardStats();
 
   const displayName =
-    user?.user_metadata?.full_name?.split(" ")[0] ?? "there";
+    profile?.full_name?.split(" ")[0] ??
+    user?.user_metadata?.full_name?.split(" ")[0] ??
+    user?.email?.split("@")[0] ??
+    "there";
 
-  const stats = [
+  const statItems = [
     {
       label: t("totalProjects"),
-      value: "0",
+      value: stats?.totalProjects ?? 0,
       icon: FolderKanban,
       color: "text-blue-500",
       bg: "bg-blue-500/10",
     },
     {
       label: t("aiChatsToday"),
-      value: "0",
+      value: stats?.aiChatsToday ?? 0,
       icon: MessageSquareCode,
       color: "text-purple-500",
       bg: "bg-purple-500/10",
     },
     {
       label: t("tokensUsed"),
-      value: "0",
+      value: stats?.tokensUsed?.toLocaleString() ?? 0,
       icon: Zap,
       color: "text-amber-500",
       bg: "bg-amber-500/10",
@@ -69,10 +75,7 @@ export function DashboardContent() {
 
   const container = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.08 },
-    },
+    show: { opacity: 1, transition: { staggerChildren: 0.08 } },
   };
 
   const item = {
@@ -93,22 +96,28 @@ export function DashboardContent() {
           {t("welcomeMessage", { name: displayName })} 👋
         </h1>
         <p className="text-muted-foreground mt-1 text-sm">
-          Here's what's happening with your workspace today.
+          Here&apos;s what&apos;s happening with your workspace today.
         </p>
       </motion.div>
 
       {/* Stats */}
-      <motion.div variants={item} className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="glass rounded-lg p-4 space-y-3"
-          >
-            <div className={`w-8 h-8 rounded-md ${stat.bg} flex items-center justify-center`}>
+      <motion.div
+        variants={item}
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+      >
+        {statItems.map((stat) => (
+          <div key={stat.label} className="glass rounded-lg p-4 space-y-3">
+            <div
+              className={`w-8 h-8 rounded-md ${stat.bg} flex items-center justify-center`}
+            >
               <stat.icon className={`w-4 h-4 ${stat.color}`} />
             </div>
             <div>
-              <p className="text-2xl font-semibold">{stat.value}</p>
+              {statsLoading ? (
+                <Skeleton className="h-7 w-12 mb-1" />
+              ) : (
+                <p className="text-2xl font-semibold">{stat.value}</p>
+              )}
               <p className="text-xs text-muted-foreground">{stat.label}</p>
             </div>
           </div>

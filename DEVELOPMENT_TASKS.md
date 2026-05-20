@@ -28,19 +28,44 @@
   - Created .env.example with all required variables
   - Set up i18n structure (next-intl) with English + Bangla
   - Created feature-based folder structure
-  - Set up Supabase client configuration
-- **Files Created:**
-  - `DEVELOPMENT_RULES.md`
-  - `DEVELOPMENT_TASKS.md`
-  - `replit.md`
-  - `turbo.json`
-  - `package.json` (root)
-  - `apps/web/` (full Next.js setup)
-  - `packages/ui/`, `packages/config/`, `packages/types/`, `packages/utils/`
-  - `.env.example`
-  - `.gitignore`
+  - Set up Supabase Auth client configuration
+- **Files Created:** DEVELOPMENT_RULES.md, DEVELOPMENT_TASKS.md, replit.md, turbo.json, package.json (root), apps/web/ (full Next.js setup), packages/ui/, packages/config/, packages/types/, packages/utils/, .env.example, .gitignore
 - **Architectural Impact:** Monorepo foundation established. All future apps/packages plug into this structure.
 - **Important Notes:** Supabase-first for Phase 1-2. NestJS added in Phase 3.
+
+### [TASK-002] Authentication System + Database Schema — Phase 1
+- **Completed:** 2026-05-20
+- **What was implemented:**
+  - Database schema migrated to Replit PostgreSQL (5 tables)
+  - Auth: Supabase Auth (Email + Google OAuth + GitHub OAuth)
+  - Profile auto-creation on first login via `/api/profile`
+  - Workspace auto-creation for new users (with owner membership)
+  - Auth state listener (useAuthListener hook) — real-time Supabase session sync
+  - Zustand store updated with profile state
+  - Dashboard connected to real stats via `/api/dashboard/stats`
+  - API routes: /api/profile (GET, PATCH), /api/projects (GET, POST), /api/dashboard/stats
+  - Login, Register, Forgot Password pages — fully functional
+  - Auth Background + animated form components
+  - Dark mode ready, i18n (English + Bangla)
+- **Architecture Decision:** Replit PostgreSQL for app data (Supabase IPv6 direct connection blocked in Replit env). Supabase used for Auth only. Data access via Next.js API routes (server-side auth verification).
+- **Files Created:**
+  - `supabase/migrations/001_initial_schema.sql` (updated — Replit DB version)
+  - `supabase/migrations/002_rls_policies.sql` (Supabase RLS — for future Supabase DB migration)
+  - `apps/web/src/lib/db.ts` (pg Pool singleton)
+  - `apps/web/src/lib/auth-helpers.ts` (requireAuth, getOrCreateProfile)
+  - `apps/web/src/hooks/use-auth.ts` (auth state listener)
+  - `apps/web/src/hooks/use-profile.ts` (profile query/mutation)
+  - `apps/web/src/hooks/use-dashboard-stats.ts` (stats query)
+  - `apps/web/src/app/api/profile/route.ts`
+  - `apps/web/src/app/api/dashboard/stats/route.ts`
+  - `apps/web/src/app/api/projects/route.ts`
+- **Files Modified:**
+  - `apps/web/src/store/auth-store.ts` (added profile state)
+  - `apps/web/src/components/providers.tsx` (added AuthProvider)
+  - `apps/web/src/components/layout/user-menu.tsx` (real profile data)
+  - `apps/web/src/modules/dashboard/components/dashboard-content.tsx` (real stats)
+- **Architectural Impact:** All DB operations go through server-side API routes. Auth verified via Supabase on every protected request. Profile/workspace auto-created on first login.
+- **Important Notes:** When Supabase IPv6/pooler issue resolves, run 002_rls_policies.sql to add RLS layer.
 
 ---
 

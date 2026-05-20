@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { LogOut, User } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ interface UserMenuProps {
 export function UserMenu({ collapsed }: UserMenuProps) {
   const t = useTranslations("auth");
   const router = useRouter();
-  const { user } = useAuthStore();
+  const { user, profile } = useAuthStore();
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -28,14 +28,28 @@ export function UserMenu({ collapsed }: UserMenuProps) {
 
   if (!user) return null;
 
-  const displayName = user.user_metadata?.full_name ?? user.email ?? "User";
+  const displayName =
+    profile?.full_name ??
+    user.user_metadata?.full_name ??
+    user.email ??
+    "User";
+  const email = user.email ?? "";
   const initials = generateInitials(displayName);
 
   return (
     <div className="flex items-center gap-2 px-2 py-2 rounded-md">
-      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary text-xs font-semibold shrink-0">
-        {initials}
-      </div>
+      {profile?.avatar_url ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={profile.avatar_url}
+          alt={displayName}
+          className="w-8 h-8 rounded-full shrink-0 object-cover"
+        />
+      ) : (
+        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary text-xs font-semibold shrink-0">
+          {initials}
+        </div>
+      )}
       <AnimatePresence mode="wait">
         {!collapsed && (
           <motion.div
@@ -49,9 +63,7 @@ export function UserMenu({ collapsed }: UserMenuProps) {
               <p className="text-xs font-medium text-sidebar-foreground truncate">
                 {displayName}
               </p>
-              <p className="text-xs text-muted-foreground truncate">
-                {user.email}
-              </p>
+              <p className="text-xs text-muted-foreground truncate">{email}</p>
             </div>
             <button
               onClick={handleSignOut}
