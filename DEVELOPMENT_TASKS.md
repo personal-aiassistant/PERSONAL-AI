@@ -71,70 +71,69 @@
 
 ## 🔄 IN PROGRESS
 
-### [TASK-002] Authentication System — Phase 1
-- **Status:** Starting
-- **Details:**
-  - Supabase Auth setup
-  - Email/Password login
-  - Google OAuth
-  - GitHub OAuth
-  - JWT + Refresh token
-  - Forgot password flow
-  - Email verification
-  - RBAC foundation (roles table + RLS)
-  - Auth UI pages (login, register, forgot-password)
-- **Target:** Phase 1 — Week 1
+### [TASK-006] Project Generator / AI Tools — Phase 2
+
+---
+
+## ✅ RECENTLY COMPLETED
+
+### [TASK-003] Database Schema ✅ — completed inside TASK-002
+
+### [TASK-004] Basic UI Shell — Completed 2026-05-20
+- App layout (sidebar, header, app-shell) ✅
+- Dashboard shell with real stats ✅
+- Dark mode toggle ✅
+- Responsive navigation ✅
+- Error boundary component ✅
+- 404 not-found page ✅
+- Toast (Sonner) ✅
+- Shadcn components: card, badge, avatar, dialog, dropdown-menu, tabs, textarea, tooltip, progress, alert ✅
+- Projects page (full CRUD: list, search, create, archive, delete) ✅
+- Settings page (profile, appearance, notifications, security tabs) ✅
+- Billing page (Free/Pro/Team plans with usage tracking) ✅
+
+### [TASK-005] AI Chat System — Completed 2026-05-20
+- AI SDK (Vercel ai@4.x + @ai-sdk/openai) integrated ✅
+- Streaming response via `/api/ai/chat` ✅
+- useChat hook from `ai/react` ✅
+- Chat history saved to Replit PostgreSQL ✅
+- Multi-model selector (GPT-4o, GPT-4o Mini, GPT-4 Turbo, GPT-3.5 Turbo) ✅
+- Chat sidebar with session management ✅
+- Starter prompts for empty state ✅
+- Code block rendering with copy button ✅
+- Stop streaming button ✅
+- API key missing detection + friendly warning ✅
+- `/api/ai/history` (GET + DELETE) ✅
 
 ---
 
 ## ⏳ PENDING
 
-### [TASK-003] Database Schema — Phase 1
-- Supabase PostgreSQL schema
-- Core tables: users, profiles, roles, workspaces, projects
-- RLS policies on all tables
-- Migrations setup
+### [TASK-006] Project Generator / AI Tools — Completed 2026-05-20
+- 7 AI generator tools: Architecture, PRD, API Builder, Schema, Docker, CI/CD, Documentation ✅
+- Specialized system prompts per tool ✅
+- Streaming generation via `/api/generators/generate` ✅
+- Generator history saved to DB with tokens tracked ✅
+- Regenerate & download output ✅
+- Sidebar "AI Tools" group with collapsible nav ✅
+- `generators` table in Replit PostgreSQL ✅
 
-### [TASK-004] Basic UI Shell — Phase 1
-- App layout (sidebar, header, main)
-- Dashboard shell
-- Dark mode toggle
-- Responsive navigation
-- Loading/skeleton states
-- Error boundaries
-- Toast notification system
+### [TASK-007] Workspace System — Completed 2026-05-20
+- Workspace detail page (members, activity, settings tabs) ✅
+- Team member management (view, role change, remove) ✅
+- Invite system: generate invite link, accept via `/invite/[token]` ✅
+- `workspace_invitations` + `activity_logs` tables ✅
+- Activity log feed with icons + relative timestamps ✅
+- Workspace settings form (name, description) ✅
+- API routes: GET/PATCH workspace, GET/PATCH/DELETE members, POST invite, GET/POST activity ✅
+- Note: Supabase Realtime skipped (IPv6 blocked) — polling fallback used ✅
 
-### [TASK-005] AI Chat System — Phase 2
-- Supabase Edge Function for AI proxy
-- OpenAI integration with Vercel AI SDK
-- Streaming response
-- Chat history (DB)
-- Context memory
-- Markdown + syntax highlighting
-- Multi-model support switcher
-
-### [TASK-006] Project Generator — Phase 3
-- Full stack project structure generator
-- Backend API generator
-- DB schema generator
-- Frontend pages generator
-- Docker config generator
-- CI/CD config generator
-
-### [TASK-007] Workspace System — Phase 3
-- Multiple projects per workspace
-- Team collaboration
-- Real-time updates (Supabase Realtime)
-- Comments system
-- Activity logs
-
-### [TASK-008] Billing System — Phase 3
-- Stripe integration (Global)
-- SSLCommerz integration (Bangladesh)
-- bKash API (Bangladesh)
-- Free/Pro/Team plans
-- Usage tracking + token metering
-- Subscription management
+### [TASK-008] Billing System — Partial (2026-05-20)
+- Billing page with plan cards (Free/Pro/Team) ✅
+- Real usage tracking from DB (/api/usage) ✅
+- Token usage progress bars ✅
+- Generator breakdown by type ✅
+- Note: Stripe/SSLCommerz/bKash integration pending (Phase 3 with NestJS) ⏳
 
 ### [TASK-009] NestJS Backend Layer — Phase 3
 - NestJS setup in apps/api

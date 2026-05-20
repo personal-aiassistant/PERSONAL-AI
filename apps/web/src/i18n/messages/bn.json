@@ -52,7 +52,15 @@
     "workspace": "ওয়ার্কস্পেস",
     "settings": "সেটিংস",
     "billing": "বিলিং",
-    "help": "সাহায্য"
+    "help": "সাহায্য",
+    "aiTools": "AI টুলস",
+    "architecture": "আর্কিটেকচার",
+    "prd": "PRD জেনারেটর",
+    "apiBuilder": "API বিল্ডার",
+    "schema": "স্কিমা জেন",
+    "docker": "ডকার",
+    "cicd": "CI/CD",
+    "documentation": "ডকস জেনারেটর"
   },
   "dashboard": {
     "title": "ড্যাশবোর্ড",

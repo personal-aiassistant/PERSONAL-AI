@@ -52,7 +52,15 @@
     "workspace": "Workspace",
     "settings": "Settings",
     "billing": "Billing",
-    "help": "Help"
+    "help": "Help",
+    "aiTools": "AI Tools",
+    "architecture": "Architecture",
+    "prd": "PRD Generator",
+    "apiBuilder": "API Builder",
+    "schema": "Schema Gen",
+    "docker": "Docker",
+    "cicd": "CI/CD",
+    "documentation": "Docs Generator"
   },
   "dashboard": {
     "title": "Dashboard",
