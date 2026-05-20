@@ -4,7 +4,11 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["*"],
+  allowedDevOrigins: [
+    "*.replit.dev",
+    "*.sisko.replit.dev",
+    "*.repl.co",
+  ],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "*.supabase.co" },
