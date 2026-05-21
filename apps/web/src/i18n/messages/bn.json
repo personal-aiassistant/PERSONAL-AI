@@ -61,7 +61,9 @@
     "schema": "স্কিমা জেন",
     "docker": "ডকার",
     "cicd": "CI/CD",
-    "documentation": "ডকস জেনারেটর"
+    "documentation": "ডকস জেনারেটর",
+    "codeReview": "কোড রিভিউ",
+    "admin": "অ্যাডমিন"
   },
   "dashboard": {
     "title": "ড্যাশবোর্ড",

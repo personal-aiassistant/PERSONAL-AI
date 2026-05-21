@@ -61,7 +61,9 @@
     "schema": "Schema Gen",
     "docker": "Docker",
     "cicd": "CI/CD",
-    "documentation": "Docs Generator"
+    "documentation": "Docs Generator",
+    "codeReview": "Code Review",
+    "admin": "Admin"
   },
   "dashboard": {
     "title": "Dashboard",

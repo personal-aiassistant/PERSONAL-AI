@@ -8,14 +8,15 @@ export type GeneratorType =
   | "schema"
   | "docker"
   | "cicd"
-  | "documentation";
+  | "documentation"
+  | "code-review";
 
 export class GenerateDto {
   @ApiProperty({
-    enum: ["architecture", "prd", "api-builder", "schema", "docker", "cicd", "documentation"],
+    enum: ["architecture", "prd", "api-builder", "schema", "docker", "cicd", "documentation", "code-review"],
   })
   @IsString()
-  @IsIn(["architecture", "prd", "api-builder", "schema", "docker", "cicd", "documentation"])
+  @IsIn(["architecture", "prd", "api-builder", "schema", "docker", "cicd", "documentation", "code-review"])
   type: GeneratorType;
 
   @ApiProperty()

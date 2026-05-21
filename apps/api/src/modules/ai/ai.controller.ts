@@ -13,6 +13,7 @@ import { ApiTags, ApiBearerAuth, ApiOperation } from "@nestjs/swagger";
 import { Response } from "express";
 import { AiService } from "./ai.service";
 import { CurrentUser, AuthUser } from "../../common/decorators/current-user.decorator";
+import { AiThrottle } from "../../common/decorators/throttle.decorator";
 import { ChatDto } from "./dto/chat.dto";
 
 @ApiTags("AI Chat")
@@ -22,6 +23,7 @@ export class AiController {
   constructor(private aiService: AiService) {}
 
   @Post("chat")
+  @AiThrottle()
   @ApiOperation({ summary: "Send a chat message (streaming)" })
   async chat(
     @CurrentUser() user: AuthUser,

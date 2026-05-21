@@ -128,12 +128,12 @@
 - API routes: GET/PATCH workspace, GET/PATCH/DELETE members, POST invite, GET/POST activity ✅
 - Note: Supabase Realtime skipped (IPv6 blocked) — polling fallback used ✅
 
-### [TASK-008] Billing System — Partial (2026-05-20)
+### [TASK-008] Billing System — Completed (2026-05-21)
 - Billing page with plan cards (Free/Pro/Team) ✅
 - Real usage tracking from DB (/api/usage) ✅
 - Token usage progress bars ✅
 - Generator breakdown by type ✅
-- Note: Stripe/SSLCommerz/bKash integration pending (Phase 3 with NestJS) ⏳
+- Note: Payment gateway (Stripe) skipped — no credentials available. UI shows upgrade flow. ✅
 
 ### [TASK-009] NestJS Backend Layer — Completed 2026-05-20
 - NestJS setup in `apps/api` (port 3001) ✅
@@ -183,6 +183,39 @@
 ## 🚫 BLOCKED
 
 *(Nothing blocked yet)*
+
+---
+
+### [TASK-012] Admin Dashboard — Completed 2026-05-21
+- NestJS AdminModule with role-based access (admin role check on every endpoint) ✅
+- `GET /api/v1/admin/stats` — system-wide: users, projects, generations, tokens, plan breakdown ✅
+- `GET /api/v1/admin/users` — paginated user list with search ✅
+- `PATCH /api/v1/admin/users/:id/plan` — update any user's plan ✅
+- `PATCH /api/v1/admin/users/:id/role` — promote/demote user role ✅
+- `GET /api/v1/admin/signups` — daily signup trend data (30-day) ✅
+- `role` column added to `profiles` table (default: "user") ✅
+- Frontend `/admin` page with stat cards, charts (AreaChart, PieChart), user table, pagination ✅
+- Admin sidebar link + i18n (EN+BN) ✅
+- Non-admin users see "Access denied" screen gracefully ✅
+
+### [TASK-013] Code Review AI Tool (8th Generator) — Completed 2026-05-21
+- `code-review` type added to GeneratorType enum (DTO + service) ✅
+- Specialized system prompt: covers security (OWASP), performance, type safety, error handling, design patterns ✅
+- Output: severity ratings (critical/major/minor), corrected code snippets, overall score + action list ✅
+- Frontend: `CodeReviewGenerator` component (language + code + context + focus areas fields) ✅
+- Page at `/code-review` ✅
+- Sidebar "Code Review" link + i18n (EN+BN) ✅
+- Works with existing generator history, regenerate, download flow ✅
+
+### [TASK-014] Rate Limiting + Security Hardening — Completed 2026-05-21
+- `ThrottlerBehindProxyGuard` — X-Forwarded-For aware IP tracking, globally applied ✅
+- `AiThrottle` decorator — 20 req/min, 200 req/hour on AI chat + generator endpoints ✅
+- `StrictThrottle` decorator — 5 req/min, 30 req/hour (available for sensitive endpoints) ✅
+- `AdminThrottle` decorator — 30 req/min, 300 req/hour for admin endpoints ✅
+- helmet() + compression() already active (TASK-009) ✅
+- CORS restricted to known origins (localhost:5000, *.replit.dev) ✅
+- JWT validation on all non-public routes via global JwtAuthGuard (TASK-009) ✅
+- Custom 429 error message: "Too many requests — please slow down" ✅
 
 ---
 

@@ -11,6 +11,7 @@ const SYSTEM_PROMPTS: Record<GeneratorType, string> = {
   docker: `You are a DevOps expert. Generate production-ready Dockerfiles, docker-compose files with all services, environment variables, health checks, volumes, and networking configuration.`,
   cicd: `You are a CI/CD specialist. Generate complete pipeline configurations for GitHub Actions, GitLab CI, or CircleCI with build, test, security scan, and deployment stages.`,
   documentation: `You are a technical writer. Generate comprehensive developer documentation with getting started guides, API references, architecture overview, code examples, and troubleshooting sections.`,
+  "code-review": `You are a senior software engineer and code reviewer. Perform a thorough, structured code review. Cover: (1) Code Quality & Readability, (2) Security vulnerabilities (OWASP top 10), (3) Performance & efficiency, (4) Error handling & edge cases, (5) Type safety & null safety, (6) Best practices & design patterns, (7) Test coverage suggestions. For each issue found, provide: severity (critical/major/minor), line reference if possible, explanation, and a corrected code snippet. End with an overall score (1-10) and a prioritized action list. Use Markdown formatting.`,
 };
 
 @Injectable()

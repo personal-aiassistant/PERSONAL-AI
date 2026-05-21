@@ -24,6 +24,8 @@ import {
   Users,
   BookOpen,
   BarChart3,
+  SearchCode,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UserMenu } from "@/components/layout/user-menu";
@@ -66,11 +68,13 @@ export function AppSidebar({ collapsed, onToggle }: AppSidebarProps) {
     { href: "/docker", icon: Container, label: t("docker") },
     { href: "/cicd", icon: GitBranch, label: t("cicd") },
     { href: "/documentation", icon: BookOpen, label: t("documentation") },
+    { href: "/code-review", icon: SearchCode, label: t("codeReview") },
   ];
 
   const bottomNav: NavItem[] = [
     { href: "/settings", icon: Settings, label: t("settings") },
     { href: "/billing", icon: CreditCard, label: t("billing") },
+    { href: "/admin", icon: ShieldCheck, label: t("admin") },
   ];
 
   const isActive = (href: string) =>

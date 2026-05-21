@@ -12,7 +12,7 @@ import { GeneratorHistory } from "./generator-history";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuthStore } from "@/store/auth-store";
 
-type GeneratorType = "architecture" | "prd" | "api" | "documentation" | "schema" | "docker" | "cicd";
+type GeneratorType = "architecture" | "prd" | "api" | "documentation" | "schema" | "docker" | "cicd" | "code-review";
 
 interface GeneratorRecord {
   id: string;

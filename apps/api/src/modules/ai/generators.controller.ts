@@ -14,6 +14,7 @@ import { ApiTags, ApiBearerAuth, ApiOperation, ApiQuery } from "@nestjs/swagger"
 import { Response } from "express";
 import { GeneratorsService } from "./generators.service";
 import { CurrentUser, AuthUser } from "../../common/decorators/current-user.decorator";
+import { AiThrottle } from "../../common/decorators/throttle.decorator";
 import { GenerateDto } from "./dto/generate.dto";
 
 @ApiTags("AI Generators")
@@ -23,6 +24,7 @@ export class GeneratorsController {
   constructor(private generatorsService: GeneratorsService) {}
 
   @Post("generate")
+  @AiThrottle()
   @ApiOperation({ summary: "Generate AI output (streaming)" })
   async generate(
     @CurrentUser() user: AuthUser,
