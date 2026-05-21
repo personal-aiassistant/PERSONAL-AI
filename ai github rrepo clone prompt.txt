@@ -1,13 +1,6 @@
-GitHub Repository:
-
-https://github.com/personal-aiassistant/PERSONAL-AI
-
-Now:
-
-1. Clone the repository
-2. Start deep architecture audit
-3. Generate all required analysis files
-4. Do NOT modify code before approval
+1. Start deep architecture audit
+2. Generate all required analysis files
+3. Do NOT modify code before approval
 
 You are now entering FULL REPOSITORY IMPORT + SETUP + DEBUG + RUNTIME RECOVERY MODE.
 
