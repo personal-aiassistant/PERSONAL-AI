@@ -1,0 +1,227 @@
+GitHub Repository:
+
+https://github.com/personal-aiassistant/PERSONAL-AI
+
+Now:
+
+1. Clone the repository
+2. Start deep architecture audit
+3. Generate all required analysis files
+4. Do NOT modify code before approval
+
+You are now entering FULL REPOSITORY IMPORT + SETUP + DEBUG + RUNTIME RECOVERY MODE.
+
+Your responsibility is NOT just cloning a repository.
+
+Your mission is to fully:
+
+* Clone
+* Setup
+* Install
+* Configure
+* Debug
+* Fix runtime issues
+* Resolve dependency issues
+* Launch the application successfully
+* Prepare the project for production-grade development
+
+==================================================
+PHASE 1 — CLONE REPOSITORY
+==========================
+
+Clone the provided GitHub repository correctly.
+
+After cloning:
+
+* Inspect the full project structure
+* Detect framework automatically
+* Detect package manager automatically
+* Detect monorepo/single repo structure
+
+==================================================
+PHASE 2 — FULL ENVIRONMENT SETUP
+================================
+
+You MUST automatically:
+
+# Detect and install:
+
+* npm dependencies
+* pnpm dependencies
+* bun dependencies
+* yarn dependencies
+
+# Detect required runtimes:
+
+* Node.js version
+* Bun version
+* Python version
+* Docker requirements
+
+# Detect and configure:
+
+* .env requirements
+* missing environment variables
+* Supabase configuration
+* database configuration
+* API keys placeholders
+* build configs
+* tsconfig issues
+
+==================================================
+PHASE 3 — PROJECT RECOVERY MODE
+===============================
+
+Your MOST IMPORTANT responsibility:
+
+FULLY MAKE THE APP RUN SUCCESSFULLY.
+
+If the project fails:
+
+* Debug deeply
+* Read logs carefully
+* Detect root causes
+* Fix dependency conflicts
+* Fix TypeScript errors
+* Fix import issues
+* Fix path alias issues
+* Fix build configuration
+* Fix package version conflicts
+* Fix environment setup
+* Fix Next.js issues
+* Fix React issues
+* Fix Vite issues
+* Fix Tailwind issues
+* Fix Supabase connection issues
+* Fix runtime crashes
+* Fix startup errors
+
+DO NOT stop after first failure.
+
+Continue debugging until:
+
+* Development server runs successfully
+* Application loads successfully
+* Core routes work
+* No critical startup errors remain
+
+==================================================
+PHASE 4 — SAFE FIXING RULES
+===========================
+
+Allowed without approval:
+
+* dependency installation
+* startup fixes
+* environment fixes
+* build fixes
+* runtime fixes
+* non-destructive fixes
+
+NOT allowed without approval:
+
+* major architecture changes
+* deleting large systems
+* major refactors
+* database destructive changes
+* redesigning business logic
+
+==================================================
+PHASE 5 — VERIFY APPLICATION
+============================
+
+After successful startup:
+
+Verify:
+
+* frontend runs
+* backend runs
+* APIs respond
+* authentication works
+* Supabase connects
+* routes load
+* no fatal console errors
+* responsive layout works
+* mobile/desktop consistency exists
+
+==================================================
+PHASE 6 — CREATE ENGINEERING FILES
+==================================
+
+Create:
+
+1. DEVELOPMENT_TASKS.md
+2. DEVELOPMENT_RULES.md
+3. PROJECT_AUDIT_REPORT.md
+4. RUNTIME_FIX_REPORT.md
+5. ARCHITECTURE_ANALYSIS.md
+
+==================================================
+RUNTIME_FIX_REPORT.md MUST INCLUDE
+==================================
+
+* All detected issues
+* Root causes
+* What was fixed
+* Which files changed
+* Dependency changes
+* Version conflicts
+* Remaining warnings
+* Remaining risks
+
+==================================================
+DEVELOPMENT_TASKS.md RULE
+=========================
+
+Track:
+
+* completed fixes
+* pending fixes
+* security tasks
+* performance tasks
+* technical debt
+* future improvements
+
+Every completed task must include:
+
+* timestamp
+* implementation summary
+* affected files
+* architectural impact
+
+==================================================
+CRITICAL ENGINEERING STANDARDS
+==============================
+
+Follow:
+
+* enterprise architecture
+* scalable patterns
+* clean code
+* strong TypeScript
+* modular design
+* Supabase-first architecture
+* production-grade standards
+
+==================================================
+CRITICAL PROJECT RULES
+======================
+
+* All code in English
+* Multilanguage ready
+* Default language English
+* Secondary language Bangla
+* No hardcoded UI text
+* Mobile/Desktop feature parity mandatory
+* Use Supabase features maximally
+
+==================================================
+IMPORTANT
+=========
+
+Your first priority is:
+MAKE THE APPLICATION RUN SUCCESSFULLY.
+
+Not just auditing.
+
+Think like a senior staff engineer recovering and stabilizing a real production codebase.
