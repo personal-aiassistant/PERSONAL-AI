@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check, Download, RefreshCw } from "lucide-react";
+import { Copy, Check, Download, RefreshCw, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ShareModal } from "@/components/share/share-modal";
 import { cn } from "@/lib/utils";
 
 interface CodeBlockProps {
@@ -61,10 +62,22 @@ interface GeneratorOutputProps {
   isStreaming: boolean;
   onRegenerate?: () => void;
   className?: string;
+  title?: string;
+  generatorType?: string;
+  generatorId?: string;
 }
 
-export function GeneratorOutput({ content, isStreaming, onRegenerate, className }: GeneratorOutputProps) {
+export function GeneratorOutput({
+  content,
+  isStreaming,
+  onRegenerate,
+  className,
+  title = "Generated Output",
+  generatorType = "architecture",
+  generatorId,
+}: GeneratorOutputProps) {
   const [copied, setCopied] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   const handleCopyAll = async () => {
     await navigator.clipboard.writeText(content);
@@ -77,7 +90,7 @@ export function GeneratorOutput({ content, isStreaming, onRegenerate, className 
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "generated-output.md";
+    a.download = `${title.toLowerCase().replace(/\s+/g, "-")}.md`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -85,41 +98,55 @@ export function GeneratorOutput({ content, isStreaming, onRegenerate, className 
   if (!content && !isStreaming) return null;
 
   return (
-    <div className={cn("glass rounded-lg flex flex-col", className)}>
-      {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-border/50 shrink-0">
-        <div className="flex items-center gap-2">
-          <div className={cn("w-2 h-2 rounded-full", isStreaming ? "bg-green-500 animate-pulse" : "bg-muted-foreground")} />
-          <span className="text-xs text-muted-foreground font-medium">
-            {isStreaming ? "Generating..." : "Output"}
-          </span>
+    <>
+      <div className={cn("glass rounded-lg flex flex-col", className)}>
+        {/* Toolbar */}
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-border/50 shrink-0">
+          <div className="flex items-center gap-2">
+            <div className={cn("w-2 h-2 rounded-full", isStreaming ? "bg-green-500 animate-pulse" : "bg-muted-foreground")} />
+            <span className="text-xs text-muted-foreground font-medium">
+              {isStreaming ? "Generating..." : "Output"}
+            </span>
+          </div>
+          <div className="flex items-center gap-1">
+            {onRegenerate && !isStreaming && content && (
+              <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" onClick={onRegenerate}>
+                <RefreshCw className="w-3 h-3" /> Regenerate
+              </Button>
+            )}
+            {content && !isStreaming && (
+              <>
+                <Button variant="ghost" size="sm" className="h-7 w-7 p-0" title="Copy all" onClick={handleCopyAll}>
+                  {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
+                </Button>
+                <Button variant="ghost" size="sm" className="h-7 w-7 p-0" title="Download .md" onClick={handleDownload}>
+                  <Download className="w-3.5 h-3.5" />
+                </Button>
+                <Button variant="ghost" size="sm" className="h-7 w-7 p-0" title="Share" onClick={() => setShareOpen(true)}>
+                  <Share2 className="w-3.5 h-3.5" />
+                </Button>
+              </>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-1">
-          {onRegenerate && !isStreaming && content && (
-            <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" onClick={onRegenerate}>
-              <RefreshCw className="w-3 h-3" /> Regenerate
-            </Button>
-          )}
-          {content && !isStreaming && (
-            <>
-              <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={handleCopyAll}>
-                {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
-              </Button>
-              <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={handleDownload}>
-                <Download className="w-3.5 h-3.5" />
-              </Button>
-            </>
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-5 prose prose-sm max-w-none">
+          {renderMarkdown(content)}
+          {isStreaming && (
+            <span className="inline-block w-0.5 h-4 bg-primary animate-pulse ml-0.5 align-middle" />
           )}
         </div>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto p-5 prose prose-sm max-w-none">
-        {renderMarkdown(content)}
-        {isStreaming && (
-          <span className="inline-block w-0.5 h-4 bg-primary animate-pulse ml-0.5 align-middle" />
-        )}
-      </div>
-    </div>
+      <ShareModal
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        title={title}
+        content={content}
+        generatorType={generatorType}
+        generatorId={generatorId}
+      />
+    </>
   );
 }

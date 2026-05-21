@@ -14,6 +14,7 @@ import { NotificationsModule } from "./modules/notifications/notifications.modul
 import { PresenceModule } from "./modules/presence/presence.module";
 import { AdminModule } from "./modules/admin/admin.module";
 import { SearchModule } from "./modules/search/search.module";
+import { ShareModule } from "./modules/share/share.module";
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { SearchModule } from "./modules/search/search.module";
     PresenceModule,
     AdminModule,
     SearchModule,
+    ShareModule,
   ],
   providers: [
     {
