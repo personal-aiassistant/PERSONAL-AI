@@ -18,6 +18,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { createClient } from "@/lib/supabase/client";
 import {
   AreaChart,
   Area,
@@ -69,7 +70,16 @@ interface UsersResponse {
   totalPages: number;
 }
 
-async function adminFetch(path: string, token: string) {
+async function getToken(): Promise<string> {
+  try {
+    const supabase = createClient();
+    const { data } = await supabase.auth.getSession();
+    return data.session?.access_token || "";
+  } catch { return ""; }
+}
+
+async function adminFetch(path: string) {
+  const token = await getToken();
   const res = await fetch(`${API_BASE}/api/v1${path}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -79,31 +89,30 @@ async function adminFetch(path: string, token: string) {
 }
 
 export function AdminContent() {
-  const { session } = useAuthStore();
-  const token = session?.access_token ?? "";
+  const { user } = useAuthStore();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
 
   const { data: stats, isLoading: statsLoading, error: statsError } = useQuery<SystemStats>({
     queryKey: ["admin-stats"],
-    queryFn: () => adminFetch("/admin/stats", token),
-    enabled: !!token,
+    queryFn: () => adminFetch("/admin/stats"),
+    enabled: !!user,
     retry: false,
   });
 
   const { data: usersData, isLoading: usersLoading } = useQuery<UsersResponse>({
     queryKey: ["admin-users", page, search],
     queryFn: () =>
-      adminFetch(`/admin/users?page=${page}&limit=15${search ? `&search=${encodeURIComponent(search)}` : ""}`, token),
-    enabled: !!token,
+      adminFetch(`/admin/users?page=${page}&limit=15${search ? `&search=${encodeURIComponent(search)}` : ""}`),
+    enabled: !!user,
     retry: false,
   });
 
   const { data: signups = [] } = useQuery<{ date: string; count: number }[]>({
     queryKey: ["admin-signups"],
-    queryFn: () => adminFetch("/admin/signups?days=30", token),
-    enabled: !!token,
+    queryFn: () => adminFetch("/admin/signups?days=30"),
+    enabled: !!user,
     retry: false,
   });
 

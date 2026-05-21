@@ -13,6 +13,7 @@ import { HealthModule } from "./modules/health/health.module";
 import { NotificationsModule } from "./modules/notifications/notifications.module";
 import { PresenceModule } from "./modules/presence/presence.module";
 import { AdminModule } from "./modules/admin/admin.module";
+import { SearchModule } from "./modules/search/search.module";
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { AdminModule } from "./modules/admin/admin.module";
     NotificationsModule,
     PresenceModule,
     AdminModule,
+    SearchModule,
   ],
   providers: [
     {

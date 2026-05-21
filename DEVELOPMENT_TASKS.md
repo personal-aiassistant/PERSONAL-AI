@@ -207,6 +207,19 @@
 - Sidebar "Code Review" link + i18n (EN+BN) ✅
 - Works with existing generator history, regenerate, download flow ✅
 
+### [TASK-015] Global Search — Completed 2026-05-21
+- NestJS `SearchModule` + `SearchController` — searches across projects, generators, AI chats ✅
+- `SearchModal` component — Cmd+K shortcut, keyboard nav (↑↓↵Esc), grouped results by type ✅
+- Recent searches persisted in localStorage (last 5 queries) ✅
+- App header updated with Search button + Cmd+K hint ✅
+
+### [TASK-016] Onboarding Wizard — Completed 2026-05-21
+- `onboarding_completed` column added to `public.profiles` (DEFAULT false) ✅
+- `/api/onboarding` POST route — marks onboarding complete in DB ✅
+- `OnboardingWizard` component — 5-step animated modal (welcome, AI chat, generators, projects, finish) ✅
+- `OnboardingProvider` wired into `providers.tsx` — shows wizard on first login when `onboarding_completed = false` ✅
+- Auto-dismissed on complete or skip; profile state drives visibility ✅
+
 ### [TASK-014] Rate Limiting + Security Hardening — Completed 2026-05-21
 - `ThrottlerBehindProxyGuard` — X-Forwarded-For aware IP tracking, globally applied ✅
 - `AiThrottle` decorator — 20 req/min, 200 req/hour on AI chat + generator endpoints ✅

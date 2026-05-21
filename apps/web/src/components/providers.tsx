@@ -4,7 +4,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@/components/theme-provider";
 import { useAuthListener } from "@/hooks/use-auth";
 import { usePresence } from "@/hooks/use-presence";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useAuthStore } from "@/store/auth-store";
+import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   useAuthListener();
@@ -14,6 +17,34 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 function PresenceProvider({ children }: { children: React.ReactNode }) {
   usePresence();
   return <>{children}</>;
+}
+
+function OnboardingProvider({ children }: { children: React.ReactNode }) {
+  const { user, profile } = useAuthStore();
+  const [showWizard, setShowWizard] = useState(false);
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (!user) { setChecked(false); setShowWizard(false); return; }
+    if (profile === null) return;
+    if (!checked) {
+      setChecked(true);
+      if (profile && profile.onboarding_completed === false) {
+        setShowWizard(true);
+      }
+    }
+  }, [user, profile, checked]);
+
+  const handleComplete = () => setShowWizard(false);
+
+  return (
+    <>
+      {children}
+      <AnimatePresence>
+        {showWizard && <OnboardingWizard onComplete={handleComplete} />}
+      </AnimatePresence>
+    </>
+  );
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -38,7 +69,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange
       >
         <AuthProvider>
-          <PresenceProvider>{children}</PresenceProvider>
+          <PresenceProvider>
+            <OnboardingProvider>{children}</OnboardingProvider>
+          </PresenceProvider>
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
